@@ -1,0 +1,43 @@
+# IN application vars
+APP_URL=https://{{ invoiceninja.subdomain|default('invoiceninja',true) }}.{{ user.domain }}
+APP_KEY=SomeRandomStringSomeRandomString
+APP_DEBUG=false
+REQUIRE_HTTPS=false
+PHANTOMJS_PDF_GENERATION=false
+PDF_GENERATOR=snappdf
+
+QUEUE_CONNECTION=database
+
+DB_TYPE=mysql
+DB_STRICT=false
+DB_HOST=mariadb
+DB_DATABASE=invoiceninja5
+DB_USERNAME=root
+DB_PASSWORD=password321
+
+# Create initial user
+# Default to these values if empty
+# IN_USER_EMAIL=admin@example.com
+# IN_PASSWORD=changeme!
+IN_USER_EMAIL="{{ user.email }}"
+IN_PASSWORD="{{ user.pass }}"
+
+# Mail options
+MAIL_MAILER=log
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS='user@example.com'
+MAIL_FROM_NAME='Self Hosted User'
+
+# MySQL
+MYSQL_ROOT_PASSWORD=password321
+MYSQL_USER=root
+MYSQL_PASSWORD=password321
+MYSQL_DATABASE=invoiceninja5
+
+# V4 env vars
+# DB_STRICT=false
+# APP_CIPHER=AES-256-CBC

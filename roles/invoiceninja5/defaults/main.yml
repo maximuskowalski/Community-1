@@ -1,0 +1,150 @@
+##########################################################################
+# Title:            Community: Invoice Ninja5 | Default Variables        #
+# Author(s):        RXWatcher, kowalski                                  #
+# URL:              https://github.com/saltyorg/Community                #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+################################
+# Basics
+################################
+
+invoiceninja5_name: invoiceninja5
+
+################################
+# Paths
+################################
+
+invoiceninja5_paths_folder: "{{ invoiceninja5_name }}"
+invoiceninja5_paths_location: "{{ server_appdata_path }}/{{ invoiceninja5_paths_folder }}"
+invoiceninja5_paths_folders_list:
+  - "{{ invoiceninja5_paths_location }}"
+  - "{{ invoiceninja5_paths_location }}/public"
+  - "{{ invoiceninja5_paths_location }}/storage"
+invoiceninja5_paths_config_location: "{{ invoiceninja5_paths_location }}/env"
+
+################################
+# Web
+################################
+
+invoiceninja5_web_subdomain: "{{ invoiceninja5_name }}"
+invoiceninja5_web_domain: "{{ user.domain }}"
+invoiceninja5_web_port: "80"
+invoiceninja5_web_url: "{{ 'https://' + invoiceninja5_web_subdomain + '.' + invoiceninja5_web_domain
+                        if (reverse_proxy_is_enabled)
+                        else 'http://localhost:' + invoiceninja5_web_port }}"
+
+################################
+# DNS
+################################
+
+invoiceninja5_dns_record: "{{ invoiceninja5_web_subdomain }}"
+invoiceninja5_dns_zone: "{{ invoiceninja5_web_domain }}"
+
+################################
+# Traefik
+################################
+
+invoiceninja5_traefik_middleware: "secureHeaders@file,gzip"
+invoiceninja5_traefik_certresolver: "{{ traefik_default_certresolver }}"
+invoiceninja5_traefik_enabled: true
+
+################################
+# Docker
+################################
+
+# Container
+invoiceninja5_docker_container: "{{ invoiceninja5_name }}"
+
+# Image
+invoiceninja5_docker_image_pull: true
+invoiceninja5_docker_image_tag: "latest"
+invoiceninja5_docker_image: "invoiceninja/invoiceninja:{{ invoiceninja5_docker_image_tag }}"
+
+# Ports
+invoiceninja5_docker_ports_defaults:
+  - "{{ invoiceninja5_web_port }}"
+invoiceninja5_docker_ports_custom: []
+invoiceninja5_docker_ports: "{{ invoiceninja5_docker_ports_defaults
+                                + invoiceninja5_docker_ports_custom
+                             if (not reverse_proxy_is_enabled)
+                             else [] + invoiceninja5_docker_ports_custom }}"
+
+# Envs
+invoiceninja5_docker_envs_default:
+  DB_HOST: "mariadb:3306"
+  DB_USERNAME: "root"
+  DB_PASSWORD: "password321"
+  DB_DATABASE: "invoiceninja5"
+invoiceninja5_docker_envs_custom: {}
+invoiceninja5_docker_envs: "{{ invoiceninja5_docker_envs_default
+                               | combine(invoiceninja5_docker_envs_custom) }}"
+
+# Commands
+invoiceninja5_docker_commands_default: []
+invoiceninja5_docker_commands_custom: []
+invoiceninja5_docker_commands: "{{ invoiceninja5_docker_commands_default
+                                   + invoiceninja5_docker_commands_custom }}"
+
+# Volumes
+invoiceninja5_docker_volumes_default:
+  - "{{ invoiceninja5_paths_location }}/public:/var/www/app/public:rw,delegated"
+  - "{{ invoiceninja5_paths_location }}/storage:/var/www/app/storage:rw,delegated"
+  - "{{ invoiceninja5_paths_location }}/env:/var/www/app/.env"
+  # - ./config/hosts:/etc/hosts:ro
+
+invoiceninja5_docker_volumes_custom: []
+invoiceninja5_docker_volumes: "{{ invoiceninja5_docker_volumes_default
+                                  + invoiceninja5_docker_volumes_custom
+                                  + docker_volumes_downloads_common }}"
+
+# Devices
+invoiceninja5_docker_devices_default: []
+invoiceninja5_docker_devices_custom: []
+invoiceninja5_docker_devices: "{{ invoiceninja5_docker_devices_default
+                                  + invoiceninja5_docker_devices_custom }}"
+
+# Hosts
+invoiceninja5_docker_hosts_default: []
+invoiceninja5_docker_hosts_custom: []
+invoiceninja5_docker_hosts: "{{ docker_hosts_common
+                                | combine(invoiceninja5_docker_hosts_default)
+                                | combine(invoiceninja5_docker_hosts_custom) }}"
+
+# Labels
+invoiceninja5_docker_labels_default: {}
+invoiceninja5_docker_labels_custom: {}
+invoiceninja5_docker_labels: "{{ docker_labels_common
+                                 | combine(invoiceninja5_docker_labels_default)
+                                 | combine(invoiceninja5_docker_labels_custom) }}"
+
+# Hostname
+invoiceninja5_docker_hostname: "{{ invoiceninja5_name }}"
+
+# Networks
+invoiceninja5_docker_networks_alias: "{{ invoiceninja5_name }}"
+invoiceninja5_docker_networks_default: []
+invoiceninja5_docker_networks_custom: []
+invoiceninja5_docker_networks: "{{ docker_networks_common
+                                   + invoiceninja5_docker_networks_default
+                                   + invoiceninja5_docker_networks_custom }}"
+
+# Capabilities
+invoiceninja5_docker_capabilities_default: []
+invoiceninja5_docker_capabilities_custom: []
+invoiceninja5_docker_capabilities: "{{ invoiceninja5_docker_capabilities_default
+                                       + invoiceninja5_docker_capabilities_custom }}"
+
+# Security Opts
+invoiceninja5_docker_security_opts_default: []
+invoiceninja5_docker_security_opts_custom: []
+invoiceninja5_docker_security_opts: "{{ invoiceninja5_docker_security_opts_default
+                                        + invoiceninja5_docker_security_opts_custom }}"
+
+# Restart Policy
+invoiceninja5_docker_restart_policy: unless-stopped
+
+# State
+invoiceninja5_docker_state: started
