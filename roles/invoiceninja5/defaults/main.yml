@@ -24,6 +24,7 @@ invoiceninja5_paths_folders_list:
   - "{{ invoiceninja5_paths_location }}/public"
   - "{{ invoiceninja5_paths_location }}/storage"
   - "{{ invoiceninja5_paths_location }}/storage/app"
+  - "{{ invoiceninja5_paths_location }}/storage/framework"
 invoiceninja5_paths_config_location: "{{ invoiceninja5_paths_location }}/env"
 
 
@@ -97,6 +98,9 @@ invoiceninja5_docker_volumes_default:
   - "{{ invoiceninja5_paths_location }}/env:/var/www/app/.env"
   # - ./config/hosts:/etc/hosts:ro
 
+# cp: can't create directory '/var/www/app/storage/framework': Permission denied
+
+
 invoiceninja5_docker_volumes_custom: []
 invoiceninja5_docker_volumes: "{{ invoiceninja5_docker_volumes_default
                                   + invoiceninja5_docker_volumes_custom
@@ -151,5 +155,3 @@ invoiceninja5_docker_restart_policy: unless-stopped
 # State
 invoiceninja5_docker_state: started
 
-# User
-invoiceninja5_docker_user: "{{ uid }}:{{ gid }}"
