@@ -88,7 +88,7 @@ invoiceninja5_docker_envs_default:
   DB_DATABASE: "invoiceninja5"
   DB_USERNAME: "root"
   DB_PASSWORD: "password321"
-
+  LOG: "single"
 
 
 invoiceninja5_docker_envs_custom: {}
@@ -103,9 +103,9 @@ invoiceninja5_docker_commands: "{{ invoiceninja5_docker_commands_default
 
 # Volumes
 invoiceninja5_docker_volumes_default:
-  - "{{ invoiceninja5_paths_location }}/public:/var/www/app/public:rw,delegated"
-  - "{{ invoiceninja5_paths_location }}/storage:/var/www/app/storage:rw,delegated"
-  - "{{ invoiceninja5_paths_location }}/env:/var/www/app/.env"
+  - "{{ invoiceninja5_paths_location }}/public:/var/www/app/public:rw"
+  - "{{ invoiceninja5_paths_location }}/storage:/var/www/app/storage:rw"
+  #- "{{ invoiceninja5_paths_location }}/env:/var/www/app/.env"
   # - ./config/hosts:/etc/hosts:ro
 
 # cp: can't create directory '/var/www/app/storage/framework': Permission denied
