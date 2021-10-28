@@ -77,10 +77,20 @@ invoiceninja5_docker_ports: "{{ invoiceninja5_docker_ports_defaults
 
 # Envs
 invoiceninja5_docker_envs_default:
+  APP_ENV: "production"
+  APP_DEBUG: "0"
+  APP_URL: "{{ invoiceninja5_web_url }}"
+  APP_KEY: "SomeRandomStringSomeRandomString"
+  APP_CIPHER: "AES-256-CBC"
+  DB_TYPE: "mysql"
+  DB_STRICT: "false"
   DB_HOST: "mariadb:3306"
+  DB_DATABASE: "invoiceninja5"
   DB_USERNAME: "root"
   DB_PASSWORD: "password321"
-  DB_DATABASE: "invoiceninja5"
+
+
+
 invoiceninja5_docker_envs_custom: {}
 invoiceninja5_docker_envs: "{{ invoiceninja5_docker_envs_default
                                | combine(invoiceninja5_docker_envs_custom) }}"
