@@ -23,7 +23,9 @@ invoiceninja5_paths_folders_list:
   - "{{ invoiceninja5_paths_location }}"
   - "{{ invoiceninja5_paths_location }}/public"
   - "{{ invoiceninja5_paths_location }}/storage"
+  - "{{ invoiceninja5_paths_location }}/storage/app"
 invoiceninja5_paths_config_location: "{{ invoiceninja5_paths_location }}/env"
+
 
 ################################
 # Web
@@ -148,3 +150,6 @@ invoiceninja5_docker_restart_policy: unless-stopped
 
 # State
 invoiceninja5_docker_state: started
+
+# User
+invoiceninja5_docker_user: "{{ uid }}:{{ gid }}"
